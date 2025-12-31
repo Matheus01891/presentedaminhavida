@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para meu grande amor</title>
+    <style>
+        body {
+            margin: 0;
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        h1 { color: #ffd700; text-shadow: 0 0 10px gold; margin-bottom: 5px; }
+        .sub { color: #ff69b4; font-weight: bold; }
+
+        /* Container da Caixa 3D */
+        .caixa-3d-container {
+            width: 100%;
+            max-width: 500px;
+            height: 350px;
+            margin-bottom: 20px;
+        }
+
+        /* Mural que aparece ao clicar */
+        #mural {
+            display: none;
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #ff69b4;
+            animation: fadeIn 1.5s ease;
+            margin-bottom: 50px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .fotos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .fotos-grid img {
+            width: 100%;
+            border-radius: 10px;
+            border: 2px solid #ff69b4;
+            transition: transform 0.3s;
+        }
+
+        .fotos-grid img:hover { transform: scale(1.05); }
+
+        .texto-emocional {
+            line-height: 1.6;
+            font-size: 1.1em;
+            text-align: center;
+            color: #fce4ec;
+        }
+
+        .btn-abrir {
+            background: #ff69b4;
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 15px #ff69b4;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .destaque { color: #ffd700; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>2026: Nosso Próximo Passo ✨</h1>
+        <p class="sub">Um presente que a distância não pôde segurar</p>
+    </div>
+
+    <div class="caixa-3d-container">
+        <iframe title="Gift Box" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" src="https://sketchfab.com/models/eb72144b83bf43d98ec1d4fcd979660a/embed?autostart=1&transparent=1&ui_hint=0" style="width: 100%; height: 100%;"></iframe>
+    </div>
+
+    <button class="btn-abrir" id="btn" onclick="revelar()">ABRIR MEU CORAÇÃO 🎁</button>
+
+    <div id="mural">
+        <div class="texto-emocional">
+            <p>Meu amor, eu queria muito estar aí hoje para te entregar isso em mãos... infelizmente a distância ainda nos venceu dessa vez, mas só fisicamente.</p>
+            
+            <p>Esse ursinho das fotos... <span class="destaque">ele é você pra mim</span>. Todas as noites, quando eu ia dormir, era ele quem estava do meu lado. Ele me acalmava porque, no meu coração, era você quem estava ali dividindo o travesseiro comigo.</p>
+            
+            <p>Pode parecer um pedaço de pelúcia, mas ele guardou todos os meus pensamentos em você enquanto a gente não pode se tocar. Prometo que, em 2026, esse ursinho vai estar no seu colo, e eu vou estar do seu lado.</p>
+        </div>
+
+        <div class="fotos-grid">
+            <img src="LINK_DA_SUA_FOTO_1" alt="Eu pensando em você">
+            <img src="LINK_DA_FOTO_DO_URSINHO" alt="Nosso ursinho">
+            <img src="LINK_DA_SUA_FOTO_2" alt="Sempre por perto">
+            <img src="LINK_DA_FOTO_DETALHE_URSINHO" alt="Pedaço de você">
+        </div>
+
+        <h3 style="text-align: center; color: #ffd700;">Feliz Ano Novo, minha vida! ❤️</h3>
+    </div>
+
+    <script>
+        function revelar() {
+            document.getElementById('mural').style.display = 'block';
+            document.getElementById('btn').style.display = 'none';
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
