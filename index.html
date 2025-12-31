@@ -3,129 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para meu grande amor</title>
+    <title>Para o Amor da Minha Vida</title>
     <style>
+        :root {
+            --cor-principal: #ff8fab;
+            --cor-secundaria: #ffd700;
+            --fundo: #0a0a0a;
+        }
+
         body {
             margin: 0;
-            background: #0a0a0a;
+            background: var(--fundo);
             color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
-            overflow-x: hidden;
         }
 
+        /* Fundo Estrelado */
+        .stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+        }
+
+        /* Cabeçalho Animado */
         .header {
             text-align: center;
-            padding: 40px 20px;
+            padding: 60px 20px;
+            animation: float 3s ease-in-out infinite;
         }
 
-        h1 { color: #ffd700; text-shadow: 0 0 10px gold; margin-bottom: 5px; }
-        .sub { color: #ff69b4; font-weight: bold; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 2.8em;
+            background: linear-gradient(45deg, var(--cor-principal), var(--cor-secundaria));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 143, 171, 0.4);
+            margin: 0;
+        }
+
+        /* Efeito de Ursinhos e Corações Voando */
+        .decoracao {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            font-size: 24px;
+            animation: subir 6s linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes subir {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
 
         /* Container da Caixa 3D */
-        .caixa-3d-container {
-            width: 100%;
-            max-width: 500px;
-            height: 350px;
-            margin-bottom: 20px;
+        .caixa-container {
+            width: 90%;
+            max-width: 550px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 143, 171, 0.2);
+            box-shadow: 0 0 40px rgba(255, 143, 171, 0.1);
+            position: relative;
+            z-index: 1;
         }
 
-        /* Mural que aparece ao clicar */
+        /* Mural de Fotos e Texto */
         #mural {
             display: none;
             width: 90%;
-            max-width: 600px;
-            background: rgba(255, 255, 255, 0.05);
+            max-width: 700px;
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(10, 10, 10, 0.8);
+            border-radius: 25px;
+            border: 2px solid var(--cor-principal);
             backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid #ff69b4;
-            animation: fadeIn 1.5s ease;
-            margin-bottom: 50px;
+            animation: scaleIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 100px;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scaleIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        .fotos-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .fotos-grid img {
-            width: 100%;
-            border-radius: 10px;
-            border: 2px solid #ff69b4;
-            transition: transform 0.3s;
-        }
-
-        .fotos-grid img:hover { transform: scale(1.05); }
-
-        .texto-emocional {
-            line-height: 1.6;
-            font-size: 1.1em;
+        .texto-declaracao {
+            font-size: 1.2em;
+            line-height: 1.8;
             text-align: center;
-            color: #fce4ec;
+            color: #ffe5ec;
+            margin-bottom: 30px;
         }
+
+        .texto-declaracao b { color: var(--cor-secundaria); }
+
+        .grid-fotos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .grid-fotos img {
+            width: 100%;
+            border-radius: 15px;
+            border: 3px solid var(--cor-principal);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            transition: 0.4s;
+        }
+
+        .grid-fotos img:hover { transform: scale(1.08) rotate(2deg); }
 
         .btn-abrir {
-            background: #ff69b4;
-            color: white;
+            margin: 30px 0;
+            padding: 18px 50px;
             border: none;
-            padding: 15px 35px;
             border-radius: 50px;
+            background: linear-gradient(45deg, var(--cor-principal), #ff4d6d);
+            color: white;
+            font-size: 1.2em;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 0 15px #ff69b4;
-            margin-bottom: 30px;
-            font-size: 1.1em;
+            box-shadow: 0 0 30px rgba(255, 143, 171, 0.5);
+            transition: 0.3s;
+            z-index: 10;
         }
 
-        .destaque { color: #ffd700; font-weight: bold; }
+        .btn-abrir:hover { transform: scale(1.1); box-shadow: 0 0 50px var(--cor-principal); }
+
     </style>
 </head>
 <body>
 
+    <div class="stars"></div>
+
     <div class="header">
-        <h1>2026: Nosso Próximo Passo ✨</h1>
-        <p class="sub">Um presente que a distância não pôde segurar</p>
+        <h1>2026: Nosso Novo Capítulo ✨</h1>
     </div>
 
-    <div class="caixa-3d-container">
+    <div class="caixa-container">
         <iframe title="Gift Box" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" src="https://sketchfab.com/models/eb72144b83bf43d98ec1d4fcd979660a/embed?autostart=1&transparent=1&ui_hint=0" style="width: 100%; height: 100%;"></iframe>
     </div>
 
-    <button class="btn-abrir" id="btn" onclick="revelar()">ABRIR MEU CORAÇÃO 🎁</button>
+    <button class="btn-abrir" id="main-btn" onclick="revelarTudo()">ABRIR SURPRESA 💖</button>
 
     <div id="mural">
-        <div class="texto-emocional">
-            <p>Meu amor, eu queria muito estar aí hoje para te entregar isso em mãos... infelizmente a distância ainda nos venceu dessa vez, mas só fisicamente.</p>
-            
-            <p>Esse ursinho das fotos... <span class="destaque">ele é você pra mim</span>. Todas as noites, quando eu ia dormir, era ele quem estava do meu lado. Ele me acalmava porque, no meu coração, era você quem estava ali dividindo o travesseiro comigo.</p>
-            
-            <p>Pode parecer um pedaço de pelúcia, mas ele guardou todos os meus pensamentos em você enquanto a gente não pode se tocar. Prometo que, em 2026, esse ursinho vai estar no seu colo, e eu vou estar do seu lado.</p>
+        <div class="texto-declaracao">
+            Amor, eu fiz esse cantinho só para te dizer o quanto você é essencial na minha vida. <br><br>
+            <b>2025 foi um ano pesado para mim</b>, mas você foi a luz que acalmou cada tempestade. Obrigado por me ensinar tantas coisas, por ter paciência e por estar ao meu lado mesmo quando tudo parecia difícil. <br><br>
+            Esse ursinho nas fotos é o que me mantém calmo quando você não está por perto. Eu durmo abraçado com ele sentindo que é você ali comigo. <br><br>
+            Obrigado por tudo o que fez por mim. <b>Eu te amo infinitamente!</b> ❤️
         </div>
 
-        <div class="fotos-grid">
-            <img src="https://ibb.co/jPQv6KNC" alt="Eu pensando em você">
-            <img src="https://ibb.co/Wv1RSN52" alt="Nosso ursinho">
-            <img src="https://ibb.co/mC35Nyrd" alt="Sempre por perto">
-            <img src="LINK_DA_FOTO_DETALHE_URSINHO" alt="Pedaço de você">
+        <div class="grid-fotos">
+            <img src="LINK_DA_FOTO_1" alt="Foto 1">
+            <img src="LINK_DA_FOTO_2_URSINHO" alt="Foto Ursinho">
+            <img src="LINK_DA_FOTO_3" alt="Foto 3">
+            <img src="LINK_DA_FOTO_4" alt="Foto 4">
         </div>
-
-        <h3 style="text-align: center; color: #ffd700;">Feliz Ano Novo, minha vida! ❤️</h3>
     </div>
 
     <script>
-        function revelar() {
+        // Cria corações e ursinhos flutuantes automaticamente
+        function criarDecoracao() {
+            const emojis = ['❤️', '🧸', '✨', '💖', '☁️'];
+            const container = document.body;
+            
+            setInterval(() => {
+                const el = document.createElement('div');
+                el.className = 'decoracao';
+                el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                container.appendChild(el);
+                
+                setTimeout(() => el.remove(), 7000);
+            }, 500);
+        }
+
+        function revelarTudo() {
             document.getElementById('mural').style.display = 'block';
-            document.getElementById('btn').style.display = 'none';
+            document.getElementById('main-btn').style.display = 'none';
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
+
+        criarDecoracao();
     </script>
 </body>
 </html>
-
