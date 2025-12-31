@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para meu grande amor</title>
+    <title>2026: Nosso Ano ✨</title>
     <style>
         :root {
             --cor-principal: #ff8fab;
@@ -29,42 +29,62 @@
             background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
         }
 
+        /* Efeito de brilho nos cantos */
+        body::before, body::after {
+            content: "";
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: var(--cor-principal);
+            filter: blur(150px);
+            opacity: 0.2;
+            z-index: -1;
+            border-radius: 50%;
+        }
+        body::before { top: -100px; left: -100px; }
+        body::after { bottom: -100px; right: -100px; }
+
         .header {
             text-align: center;
-            padding: 50px 20px;
+            padding: 60px 20px 30px 20px;
         }
 
         h1 {
-            font-size: 2.5em;
+            font-size: 2.8em;
             background: linear-gradient(45deg, var(--cor-principal), var(--cor-secundaria));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 20px rgba(255, 143, 171, 0.4);
+            margin: 0;
         }
 
+        /* Elementos Flutuantes (Amoras e Corações) */
         .decoracao {
             position: fixed;
             pointer-events: none;
-            z-index: 0;
-            font-size: 24px;
-            animation: subir 6s linear infinite;
-            opacity: 0.5;
+            z-index: 10;
+            animation: subirERodar 7s linear infinite;
+            opacity: 0.8;
         }
 
-        @keyframes subir {
+        @keyframes subirERodar {
             0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
         .caixa-container {
             width: 90%;
             max-width: 500px;
-            height: 350px;
-            background: rgba(255, 255, 255, 0.03);
+            height: 400px;
+            background: rgba(255, 143, 171, 0.05);
             border-radius: 30px;
-            border: 1px solid rgba(255, 143, 171, 0.2);
+            border: 1px solid rgba(255, 143, 171, 0.3);
+            box-shadow: 0 0 30px rgba(255, 143, 171, 0.15);
             position: relative;
             z-index: 1;
+            overflow: hidden;
         }
 
         #mural {
@@ -72,19 +92,19 @@
             width: 90%;
             max-width: 700px;
             margin: 40px 0 100px 0;
-            padding: 25px;
+            padding: 30px;
             background: rgba(15, 15, 15, 0.95);
             border-radius: 25px;
             border: 2px solid var(--cor-principal);
             backdrop-filter: blur(15px);
-            animation: scaleIn 0.8s ease;
+            animation: scaleIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         .texto-declaracao {
-            font-size: 1.1em;
-            line-height: 1.7;
+            font-size: 1.15em;
+            line-height: 1.8;
             text-align: center;
             color: #ffe5ec;
         }
@@ -100,24 +120,33 @@
 
         .grid-fotos img {
             width: 100%;
-            height: 250px;
+            height: 280px;
             object-fit: cover;
-            border-radius: 15px;
-            border: 2px solid var(--cor-principal);
+            border-radius: 20px;
+            border: 3px solid var(--cor-principal);
+            transition: 0.4s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
+
+        .grid-fotos img:hover { transform: scale(1.05) rotate(2deg); }
 
         .btn-abrir {
             margin: 30px 0;
-            padding: 15px 40px;
+            padding: 18px 50px;
             border: none;
             border-radius: 50px;
             background: linear-gradient(45deg, var(--cor-principal), #ff4d6d);
             color: white;
+            font-size: 1.2em;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 143, 171, 0.4);
+            box-shadow: 0 0 30px rgba(255, 143, 171, 0.5);
+            transition: 0.3s;
             z-index: 10;
         }
+        .btn-abrir:hover { transform: scale(1.1); box-shadow: 0 0 45px var(--cor-principal); }
+
+        .amora-svg { width: 45px; height: 45px; }
     </style>
 </head>
 <body>
@@ -125,21 +154,21 @@
     <div class="stars"></div>
 
     <div class="header">
-        <h1>Para o meu amor ❤️</h1>
+        <h1>2026: Nosso Próximo Passo ✨</h1>
     </div>
 
     <div class="caixa-container">
         <iframe title="Gift Box" frameborder="0" allowfullscreen src="https://sketchfab.com/models/eb72144b83bf43d98ec1d4fcd979660a/embed?autostart=1&transparent=1&ui_hint=0" style="width: 100%; height: 100%;"></iframe>
     </div>
 
-    <button class="btn-abrir" id="main-btn" onclick="revelarTudo()">CLIQUE PARA ABRIR 🎁</button>
+    <button class="btn-abrir" id="main-btn" onclick="revelarTudo()">TOQUE PARA ABRIR 🎁</button>
 
     <div id="mural">
         <div class="texto-declaracao">
-            Amor, eu fiz esse site para te agradecer por tudo. 2025 foi um ano bem pesado pra mim, mas você foi quem acalmou tudo e me ensinou a levar as coisas de um jeito melhor. <br><br>
-            Tem uma história engraçada sobre esse ursinho das fotos: Eu tava doidão, tinha bebido pra caramba kkkkk, achei 20 conto no chão e tinha mais 2 no bolso. Fui naquelas máquinas de mercado e, por incrível que pareça, consegui pegar ele! <br><br>
-            Desde aquele dia, batizei ele de <b>Ana Clara</b>. Ele passou a ser você pra mim aqui perto. Olho pra ele e lembro de você na hora. <br><br>
-            <b>Obrigado por ser meu porto seguro. Te amo muito!</b>
+            Amor, obrigado por tudo o que fez por mim. 2025 foi um ano bem pesado pra mim, mas você foi quem acalmou a maior parte dele e me ensinou várias coisinhas que eu vou levar pra sempre. <br><br>
+            A história desse ursinho é muito louca kkkkk. Eu tava doidão, tinha bebido pra caralho, achei 20 conto no chão e tinha mais 2 no bolso. Fui naquelas máquinas de mercado e acabei conseguindo pegar ele! <br><br>
+            Desde aquele dia, batizei ele de <b>Ana Clara</b>. Ele me lembra você em cada detalhe e passou a ser o meu jeitinho de ter você aqui por perto. <br><br>
+            <b>Te amo muito e obrigado por ser meu porto seguro! ❤️</b>
         </div>
 
         <div class="grid-fotos">
@@ -151,15 +180,35 @@
 
     <script>
         function criarDecoracao() {
-            const emojis = ['❤️', '🧸', '✨'];
+            const container = document.body;
+            
             setInterval(() => {
+                const escolhe = Math.random();
                 const el = document.createElement('div');
                 el.className = 'decoracao';
-                el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                
+                if (escolhe > 0.5) {
+                    // Desenho da Amora Fofa com olhinhos
+                    el.innerHTML = `
+                        <svg class="amora-svg" viewBox="0 0 100 100">
+                            <circle cx="50" cy="60" r="35" fill="#800080" />
+                            <circle cx="35" cy="45" r="15" fill="#800080" />
+                            <circle cx="65" cy="45" r="15" fill="#800080" />
+                            <circle cx="50" cy="30" r="15" fill="#800080" />
+                            <path d="M40 25 Q50 10 60 25" stroke="#228B22" stroke-width="8" fill="none" />
+                            <circle cx="40" cy="55" r="4" fill="white" />
+                            <circle cx="60" cy="55" r="4" fill="white" />
+                            <path d="M45 70 Q50 75 55 70" stroke="white" stroke-width="2" fill="none" />
+                        </svg>`;
+                } else {
+                    el.innerHTML = '<span style="color:#ff4d6d; font-size:30px;">❤️</span>';
+                }
+                
                 el.style.left = Math.random() * 100 + 'vw';
-                el.style.animationDuration = (Math.random() * 2 + 4) + 's';
-                document.body.appendChild(el);
-                setTimeout(() => el.remove(), 6000);
+                el.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                container.appendChild(el);
+                
+                setTimeout(() => el.remove(), 7000);
             }, 600);
         }
 
@@ -168,6 +217,7 @@
             document.getElementById('main-btn').style.display = 'none';
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
+        
         criarDecoracao();
     </script>
 </body>
