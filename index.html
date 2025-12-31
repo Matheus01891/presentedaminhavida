@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026: Nosso Ano ✨</title>
+    <title>2026: Nosso Próximo Passo ✨</title>
     <style>
         :root {
             --cor-principal: #ff8fab;
@@ -29,48 +29,53 @@
             background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
         }
 
-        /* Efeito de brilho nos cantos */
+        /* Brilho pulsante nos cantos */
         body::before, body::after {
             content: "";
             position: fixed;
-            width: 300px;
-            height: 300px;
+            width: 400px;
+            height: 400px;
             background: var(--cor-principal);
-            filter: blur(150px);
-            opacity: 0.2;
+            filter: blur(180px);
+            opacity: 0.15;
             z-index: -1;
             border-radius: 50%;
+            animation: pulseBrilho 4s infinite alternate;
         }
-        body::before { top: -100px; left: -100px; }
-        body::after { bottom: -100px; right: -100px; }
+        body::before { top: -150px; left: -150px; }
+        body::after { bottom: -150px; right: -150px; }
+
+        @keyframes pulseBrilho { from { opacity: 0.1; transform: scale(1); } to { opacity: 0.25; transform: scale(1.2); } }
 
         .header {
             text-align: center;
             padding: 60px 20px 30px 20px;
+            animation: flutuarTitulo 3s ease-in-out infinite;
         }
+
+        @keyframes flutuarTitulo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
         h1 {
             font-size: 2.8em;
             background: linear-gradient(45deg, var(--cor-principal), var(--cor-secundaria));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(255, 143, 171, 0.4);
+            text-shadow: 0 0 25px rgba(255, 143, 171, 0.5);
             margin: 0;
         }
 
-        /* Elementos Flutuantes (Amoras e Corações) */
+        /* Elementos Flutuantes */
         .decoracao {
             position: fixed;
             pointer-events: none;
             z-index: 10;
             animation: subirERodar 7s linear infinite;
-            opacity: 0.8;
         }
 
         @keyframes subirERodar {
             0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
@@ -81,10 +86,11 @@
             background: rgba(255, 143, 171, 0.05);
             border-radius: 30px;
             border: 1px solid rgba(255, 143, 171, 0.3);
-            box-shadow: 0 0 30px rgba(255, 143, 171, 0.15);
+            box-shadow: 0 0 35px rgba(255, 143, 171, 0.2);
             position: relative;
             z-index: 1;
             overflow: hidden;
+            transition: 0.5s;
         }
 
         #mural {
@@ -97,10 +103,10 @@
             border-radius: 25px;
             border: 2px solid var(--cor-principal);
             backdrop-filter: blur(15px);
-            animation: scaleIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: explosaoRevelar 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes explosaoRevelar { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         .texto-declaracao {
             font-size: 1.15em;
@@ -128,7 +134,7 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
-        .grid-fotos img:hover { transform: scale(1.05) rotate(2deg); }
+        .grid-fotos img:hover { transform: scale(1.08) rotate(-2deg); }
 
         .btn-abrir {
             margin: 30px 0;
@@ -137,27 +143,40 @@
             border-radius: 50px;
             background: linear-gradient(45deg, var(--cor-principal), #ff4d6d);
             color: white;
-            font-size: 1.2em;
+            font-size: 1.3em;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 0 30px rgba(255, 143, 171, 0.5);
+            box-shadow: 0 0 30px rgba(255, 143, 171, 0.6);
             transition: 0.3s;
             z-index: 10;
         }
-        .btn-abrir:hover { transform: scale(1.1); box-shadow: 0 0 45px var(--cor-principal); }
+        .btn-abrir:hover { transform: scale(1.15); filter: brightness(1.1); }
 
         .amora-svg { width: 45px; height: 45px; }
+
+        /* Estilo para os fogos de artifício */
+        .fogo {
+            position: fixed;
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 100;
+        }
     </style>
 </head>
 <body>
 
     <div class="stars"></div>
 
+    <audio id="musica" loop>
+        <source src="SUA_MUSICA_AQUI.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="header">
         <h1>2026: Nosso Próximo Passo ✨</h1>
     </div>
 
-    <div class="caixa-container">
+    <div class="caixa-container" id="box">
         <iframe title="Gift Box" frameborder="0" allowfullscreen src="https://sketchfab.com/models/eb72144b83bf43d98ec1d4fcd979660a/embed?autostart=1&transparent=1&ui_hint=0" style="width: 100%; height: 100%;"></iframe>
     </div>
 
@@ -181,40 +200,56 @@
     <script>
         function criarDecoracao() {
             const container = document.body;
-            
             setInterval(() => {
                 const escolhe = Math.random();
                 const el = document.createElement('div');
                 el.className = 'decoracao';
-                
                 if (escolhe > 0.5) {
-                    // Desenho da Amora Fofa com olhinhos
-                    el.innerHTML = `
-                        <svg class="amora-svg" viewBox="0 0 100 100">
-                            <circle cx="50" cy="60" r="35" fill="#800080" />
-                            <circle cx="35" cy="45" r="15" fill="#800080" />
-                            <circle cx="65" cy="45" r="15" fill="#800080" />
-                            <circle cx="50" cy="30" r="15" fill="#800080" />
-                            <path d="M40 25 Q50 10 60 25" stroke="#228B22" stroke-width="8" fill="none" />
-                            <circle cx="40" cy="55" r="4" fill="white" />
-                            <circle cx="60" cy="55" r="4" fill="white" />
-                            <path d="M45 70 Q50 75 55 70" stroke="white" stroke-width="2" fill="none" />
-                        </svg>`;
+                    el.innerHTML = `<svg class="amora-svg" viewBox="0 0 100 100"><circle cx="50" cy="60" r="35" fill="#800080" /><circle cx="35" cy="45" r="15" fill="#800080" /><circle cx="65" cy="45" r="15" fill="#800080" /><circle cx="50" cy="30" r="15" fill="#800080" /><path d="M40 25 Q50 10 60 25" stroke="#228B22" stroke-width="8" fill="none" /><circle cx="40" cy="55" r="4" fill="white" /><circle cx="60" cy="55" r="4" fill="white" /><path d="M45 70 Q50 75 55 70" stroke="white" stroke-width="2" fill="none" /></svg>`;
                 } else {
                     el.innerHTML = '<span style="color:#ff4d6d; font-size:30px;">❤️</span>';
                 }
-                
                 el.style.left = Math.random() * 100 + 'vw';
                 el.style.animationDuration = (Math.random() * 3 + 4) + 's';
                 container.appendChild(el);
-                
                 setTimeout(() => el.remove(), 7000);
-            }, 600);
+            }, 500);
+        }
+
+        // Função para os fogos de artifício
+        function soltarFogos() {
+            for(let i=0; i<50; i++) {
+                const f = document.createElement('div');
+                f.className = 'fogo';
+                f.style.left = '50%';
+                f.style.top = '50%';
+                f.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                document.body.appendChild(f);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 200 + 50;
+                const destX = Math.cos(angle) * velocity;
+                const destY = Math.sin(angle) * velocity;
+
+                f.animate([
+                    { transform: 'translate(0, 0)', opacity: 1 },
+                    { transform: `translate(${destX}px, ${destY}px)`, opacity: 0 }
+                ], { duration: 1000, easing: 'ease-out' });
+
+                setTimeout(() => f.remove(), 1000);
+            }
         }
 
         function revelarTudo() {
+            // Toca a música
+            const musica = document.getElementById('musica');
+            musica.play().catch(e => console.log("Erro ao tocar música: " + e));
+
             document.getElementById('mural').style.display = 'block';
             document.getElementById('main-btn').style.display = 'none';
+            document.getElementById('box').style.transform = 'scale(0.8)';
+            
+            soltarFogos();
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
         
