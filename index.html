@@ -29,12 +29,10 @@
             background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
         }
 
-        /* Brilho pulsante nos cantos */
         body::before, body::after {
             content: "";
             position: fixed;
-            width: 400px;
-            height: 400px;
+            width: 400px; height: 400px;
             background: var(--cor-principal);
             filter: blur(180px);
             opacity: 0.15;
@@ -89,7 +87,6 @@
             position: relative;
             z-index: 1;
             overflow: hidden;
-            transition: 0.5s;
         }
 
         #mural {
@@ -124,16 +121,13 @@
         }
 
         .grid-fotos img {
-            width: 100%;
-            height: 280px;
+            width: 100%; height: 280px;
             object-fit: cover;
             border-radius: 20px;
             border: 3px solid var(--cor-principal);
             transition: 0.4s;
             box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
-
-        .grid-fotos img:hover { transform: scale(1.08) rotate(-2deg); }
 
         .btn-abrir {
             margin: 30px 0;
@@ -146,14 +140,18 @@
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 0 30px rgba(255, 143, 171, 0.6);
-            transition: 0.3s;
             z-index: 10;
         }
 
+        /* Player quase invisível mas "ativo" para o telemóvel não pausar */
         #music-container {
             position: fixed;
-            bottom: -500px;
-            left: 0;
+            bottom: 10px;
+            left: 10px;
+            width: 1px;
+            height: 1px;
+            opacity: 0.01;
+            overflow: hidden;
         }
 
         .amora-svg { width: 45px; height: 45px; }
@@ -207,31 +205,41 @@
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         var player;
+        var musicStarted = false;
+
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
-                height: '0',
-                width: '0',
+                height: '100',
+                width: '100',
                 videoId: 'w4q-antIDz0',
                 playerVars: {
                     'start': 79,
-                    'playsinline': 1, // Crucial para mobile
-                    'enablejsapi': 1,
-                    'origin': window.location.origin
+                    'playsinline': 1,
+                    'controls': 0,
+                    'disablekb': 1,
+                    'modestbranding': 1
+                },
+                events: {
+                    'onStateChange': onPlayerStateChange
                 }
             });
+        }
+
+        // Se a música parar sozinha, este código força ela a voltar
+        function onPlayerStateChange(event) {
+            if (musicStarted && (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED)) {
+                player.playVideo();
+            }
         }
 
         function criarDecoracao() {
             const container = document.body;
             setInterval(() => {
-                const escolhe = Math.random();
                 const el = document.createElement('div');
                 el.className = 'decoracao';
-                if (escolhe > 0.5) {
-                    el.innerHTML = `<svg class="amora-svg" viewBox="0 0 100 100"><circle cx="50" cy="60" r="35" fill="#800080" /><circle cx="35" cy="45" r="15" fill="#800080" /><circle cx="65" cy="45" r="15" fill="#800080" /><circle cx="50" cy="30" r="15" fill="#800080" /><path d="M40 25 Q50 10 60 25" stroke="#228B22" stroke-width="8" fill="none" /><circle cx="40" cy="55" r="4" fill="white" /><circle cx="60" cy="55" r="4" fill="white" /><path d="M45 70 Q50 75 55 70" stroke="white" stroke-width="2" fill="none" /></svg>`;
-                } else {
-                    el.innerHTML = '<span style="color:#ff4d6d; font-size:30px;">❤️</span>';
-                }
+                el.innerHTML = Math.random() > 0.5 ? 
+                    `<svg class="amora-svg" viewBox="0 0 100 100"><circle cx="50" cy="60" r="35" fill="#800080" /><circle cx="35" cy="45" r="15" fill="#800080" /><circle cx="65" cy="45" r="15" fill="#800080" /><circle cx="50" cy="30" r="15" fill="#800080" /><path d="M40 25 Q50 10 60 25" stroke="#228B22" stroke-width="8" fill="none" /><circle cx="40" cy="55" r="4" fill="white" /><circle cx="60" cy="55" r="4" fill="white" /><path d="M45 70 Q50 75 55 70" stroke="white" stroke-width="2" fill="none" /></svg>` : 
+                    '<span style="color:#ff4d6d; font-size:30px;">❤️</span>';
                 el.style.left = Math.random() * 100 + 'vw';
                 el.style.animationDuration = (Math.random() * 3 + 4) + 's';
                 container.appendChild(el);
@@ -248,26 +256,21 @@
                 document.body.appendChild(f);
                 const angle = Math.random() * Math.PI * 2;
                 const velocity = Math.random() * 300 + 100;
-                f.animate([
-                    { transform: 'translate(0, 0)', opacity: 1 },
-                    { transform: `translate(${Math.cos(angle)*velocity}px, ${Math.sin(angle)*velocity}px)`, opacity: 0 }
-                ], { duration: 1500, easing: 'ease-out' });
+                f.animate([{ transform: 'translate(0, 0)', opacity: 1 }, { transform: `translate(${Math.cos(angle)*velocity}px, ${Math.sin(angle)*velocity}px)`, opacity: 0 }], { duration: 1500, easing: 'ease-out' });
                 setTimeout(() => f.remove(), 1500);
             }
         }
 
         function revelarTudo() {
-            // Comando reforçado para tocar no celular
+            musicStarted = true;
             if (player && player.playVideo) {
                 player.setVolume(100);
                 player.playVideo();
                 
-                // Backup caso o mobile bloqueie o primeiro comando
-                setTimeout(() => {
-                    if (player.getPlayerState() !== 1) {
-                        player.playVideo();
-                    }
-                }, 300);
+                // Reforço múltiplo para telemóveis chatos
+                setTimeout(() => player.playVideo(), 100);
+                setTimeout(() => player.playVideo(), 500);
+                setTimeout(() => player.playVideo(), 1000);
             }
 
             document.getElementById('mural').style.display = 'block';
