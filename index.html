@@ -64,7 +64,6 @@
             margin: 0;
         }
 
-        /* Elementos Flutuantes */
         .decoracao {
             position: fixed;
             pointer-events: none;
@@ -90,7 +89,6 @@
             position: relative;
             z-index: 1;
             overflow: hidden;
-            transition: 0.5s;
         }
 
         #mural {
@@ -150,11 +148,16 @@
             transition: 0.3s;
             z-index: 10;
         }
-        .btn-abrir:hover { transform: scale(1.15); filter: brightness(1.1); }
+
+        /* Player oculto para a música */
+        #music-container {
+            position: fixed;
+            bottom: -500px;
+            left: 0;
+        }
 
         .amora-svg { width: 45px; height: 45px; }
 
-        /* Estilo para os fogos de artifício */
         .fogo {
             position: fixed;
             width: 5px; height: 5px;
@@ -168,9 +171,9 @@
 
     <div class="stars"></div>
 
-    <audio id="musica" loop>
-        <source src="SUA_MUSICA_AQUI.mp3" type="audio/mpeg">
-    </audio>
+    <div id="music-container">
+        <div id="player"></div>
+    </div>
 
     <div class="header">
         <h1>2026: Nosso Próximo Passo ✨</h1>
@@ -184,7 +187,7 @@
 
     <div id="mural">
         <div class="texto-declaracao">
-            Amor, obrigado por tudo o que fez por mim. 2025 foi um ano bem pesado pra mim, mas você foi quem acalmou a maior parte dele e me ensinou várias coisinhas que eu vou levar pra sempre. <br><br>
+            Amor, obrigado por tudo o que você fez por mim. 2025 foi um ano bem pesado pra mim, mas você foi quem acalmou a maior parte dele e me ensinou várias coisinhas que eu vou levar pra sempre. <br><br>
             A história desse ursinho é muito louca kkkkk. Eu tava doidão, tinha bebido pra caralho, achei 20 conto no chão e tinha mais 2 no bolso. Fui naquelas máquinas de mercado e acabei conseguindo pegar ele! <br><br>
             Desde aquele dia, batizei ele de <b>Ana Clara</b>. Ele me lembra você em cada detalhe e passou a ser o meu jeitinho de ter você aqui por perto. <br><br>
             <b>Te amo muito e obrigado por ser meu porto seguro! ❤️</b>
@@ -198,6 +201,25 @@
     </div>
 
     <script>
+        // Carrega a API do YouTube
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0',
+                width: '0',
+                videoId: 'w4q-antIDz0', // ID do vídeo Bebê Confesso 2
+                playerVars: {
+                    'start': 79, // Começa em 01:19 (refrão)
+                    'playsinline': 1
+                }
+            });
+        }
+
         function criarDecoracao() {
             const container = document.body;
             setInterval(() => {
@@ -216,34 +238,28 @@
             }, 500);
         }
 
-        // Função para os fogos de artifício
         function soltarFogos() {
-            for(let i=0; i<50; i++) {
+            for(let i=0; i<60; i++) {
                 const f = document.createElement('div');
                 f.className = 'fogo';
-                f.style.left = '50%';
-                f.style.top = '50%';
-                f.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                f.style.left = '50%'; f.style.top = '50%';
+                f.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
                 document.body.appendChild(f);
-                
                 const angle = Math.random() * Math.PI * 2;
-                const velocity = Math.random() * 200 + 50;
-                const destX = Math.cos(angle) * velocity;
-                const destY = Math.sin(angle) * velocity;
-
+                const velocity = Math.random() * 300 + 100;
                 f.animate([
                     { transform: 'translate(0, 0)', opacity: 1 },
-                    { transform: `translate(${destX}px, ${destY}px)`, opacity: 0 }
-                ], { duration: 1000, easing: 'ease-out' });
-
-                setTimeout(() => f.remove(), 1000);
+                    { transform: `translate(${Math.cos(angle)*velocity}px, ${Math.sin(angle)*velocity}px)`, opacity: 0 }
+                ], { duration: 1500, easing: 'ease-out' });
+                setTimeout(() => f.remove(), 1500);
             }
         }
 
         function revelarTudo() {
-            // Toca a música
-            const musica = document.getElementById('musica');
-            musica.play().catch(e => console.log("Erro ao tocar música: " + e));
+            // Toca a música a partir do refrão
+            if (player && player.playVideo) {
+                player.playVideo();
+            }
 
             document.getElementById('mural').style.display = 'block';
             document.getElementById('main-btn').style.display = 'none';
